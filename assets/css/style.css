@@ -1,9 +1,10 @@
 html,
 body{
-    background: url('../images/liSX9D5.jpg');
-    background-size: cover;
+    background: url('../images/large.jpg');
+    background-position-x: 50%;
+    background-position-y: -50%;
     background-repeat: no-repeat;
-    background-color: #030406;
+    background-color:#010101;
 }
 
 .health-points{
