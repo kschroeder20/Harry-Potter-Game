@@ -1,11 +1,9 @@
-
-
 $("#start-game").on("click", function () {
 
 	$("#start-game").on("click", function () {
-		 location.reload();
+		location.reload();
 	});
-//Set variables to default for reset
+	//Set variables to default for reset
 	var game = {
 		userSelected: false,
 		userPlayer: "",
@@ -51,7 +49,7 @@ $("#start-game").on("click", function () {
 		healthPointsDisplay: $("#draco-health-points")
 	};
 
-	function reset (){
+	function reset() {
 		$("#harry-col").empty();
 	}
 
@@ -118,13 +116,15 @@ $("#start-game").on("click", function () {
 			game.userHealthPointsDisplay = harry.healthPointsDisplay;
 			game.attackPoints = harry.attackPoints;
 			game.userImage
-				.appendTo("#player-row").removeClass('col-2').addClass('col-4')
+				.appendTo("#player-row").removeClass('col-2').addClass('col-6')
 				.css({
 					"background": "green",
 					"margin-top": "10px"
-
 				});
 			$("#instructions").text("Select one wizard as your first enemy");
+			$('#game-progress-user').text("You have selected " + game.userPlayer).css({
+				"color": "green"
+			});
 		} else if (
 			game.userSelected === true &&
 			game.gameRunning === true &&
@@ -143,6 +143,9 @@ $("#start-game").on("click", function () {
 					"margin-top": "10px"
 				});
 			$("#instructions").text("Attack your enemy!");
+			$('#game-progress-enemy').text("Your enemy is " + game.enemy).css({
+				"color": "red"
+			});
 		}
 	});
 
@@ -155,12 +158,15 @@ $("#start-game").on("click", function () {
 			game.userHealthPointsDisplay = ron.healthPointsDisplay;
 			game.attackPoints = ron.attackPoints;
 			game.userImage
-				.appendTo("#player-row").removeClass('col-2').addClass('col-4')
+				.appendTo("#player-row").removeClass('col-6').addClass('col-6')
 				.css({
 					"background": "green",
 					"margin-top": "10px"
 				});
 			$("#instructions").text("Select one wizard as your first enemy");
+			$('#game-progress-user').text("You have selected " + game.userPlayer).css({
+				"color": "green"
+			});;
 		} else if (
 			game.userSelected === true &&
 			game.gameRunning === true &&
@@ -179,6 +185,9 @@ $("#start-game").on("click", function () {
 					"margin-top": "10px"
 				});
 			$("#instructions").text("Attack your enemy!");
+			$('#game-progress-enemy').text("Your enemy is " + game.enemy).css({
+				"color": "red"
+			});
 		}
 	});
 
@@ -191,12 +200,16 @@ $("#start-game").on("click", function () {
 			game.userHealthPointsDisplay = hermione.healthPointsDisplay;
 			game.attackPoints = hermione.attackPoints;
 			game.userImage
-				.appendTo("#player-row").removeClass('col-2').addClass('col-4')
+				.appendTo("#player-row").removeClass('col-2').addClass('col-6')
 				.css({
 					"background": "green",
-					"margin-top": "10px"
+					"margin-top": "10px",
+					"margin-left": "10px"
 				});
 			$("#instructions").text("Select one wizard as your first enemy");
+			$('#game-progress-user').text("You have selected " + game.userPlayer).css({
+				"color": "green"
+			});;
 		} else if (
 			game.userSelected === true &&
 			game.gameRunning === true &&
@@ -215,6 +228,9 @@ $("#start-game").on("click", function () {
 					"margin-top": "10px"
 				});
 			$("#instructions").text("Attack your enemy!");
+			$('#game-progress-enemy').text("Your enemy is " + game.enemy).css({
+				"color": "red"
+			});
 		}
 	});
 
@@ -227,12 +243,15 @@ $("#start-game").on("click", function () {
 			game.userHealthPointsDisplay = draco.healthPointsDisplay;
 			game.attackPoints = draco.attackPoints;
 			game.userImage
-				.appendTo("#player-row").removeClass('col-2').addClass('col-4')
+				.appendTo("#player-row").removeClass('col-2').addClass('col-6')
 				.css({
 					"background": "green",
 					"margin-top": "10px"
 				});
 			$("#instructions").text("Select one wizard as your first enemy");
+			$('#game-progress-user').text("You have selected " + game.userPlayer).css({
+				"color": "green"
+			});;
 		} else if (
 			game.userSelected === true &&
 			game.gameRunning === true &&
@@ -251,11 +270,14 @@ $("#start-game").on("click", function () {
 					"margin-top": "10px"
 				});
 			$("#instructions").text("Attack your enemy!");
+			$('#game-progress-enemy').text("Your enemy is " + game.enemy).css({
+				"color": "red"
+			});
 		}
 	});
 
 	$("#attack-button").on("click", () => {
-		if (game.gameRunning === true && game.userHealthPoints > 0 && game.enemyHealthPoints > 0) {
+		if (game.gameRunning === true && game.userHealthPoints >= 0 && game.enemyHealthPoints >= 0) {
 			game.userHealthPoints = game.userHealthPoints - game.counterAttackPoints;
 			game.enemyHealthPoints = game.enemyHealthPoints - game.attackPoints;
 			$(game.userHealthPointsDisplay).text(
@@ -269,14 +291,15 @@ $("#start-game").on("click", function () {
 
 			game.attackPoints = game.attackPoints + game.attackPoints;
 		}
-		if (game.gameRunning === true && game.userHealthPoints > 0 && game.enemyHealthPoints < 0) {
+		if (game.gameRunning === true && game.userHealthPoints >= 0 && game.enemyHealthPoints <= 0) {
 
 			game.enemyHealthPoints = 0;
 			$(game.enemyHealthPointsDisplay).text(
 				"Health Points: " + game.enemyHealthPoints
 			);
-				$("#game-progress-user").text(game.userPlayer + " won!");
-				$("#game-progress-enemy").text(game.enemy + " was defeated!");
+			$("#game-progress-user").text(game.userPlayer + " won!");
+			$("#game-progress-enemy").text(game.enemy + " was defeated!");
+			$("#wizards-defeated-text").text("Wizards Defeated:");
 			game.enemyImage
 				.appendTo("#defeated-row")
 				.css({
@@ -285,31 +308,37 @@ $("#start-game").on("click", function () {
 					"width": "30%",
 					"opacity": "0.5"
 				});
-			game.enemyHealthPointsDisplay.css({"font-size": "10px"})
+			game.enemyHealthPointsDisplay.css({
+				"font-size": "10px"
+			})
 			game.enemySelected = false;
 			game.enemyDefeatedCount = game.enemyDefeatedCount + 1;
 			$("#instructions").text("Select Your Next Opponent");
-			
+
 		};
 
-		if (game.gameRunning === true && game.userHealthPoints < 0) {
-			game.gameRunning = false;
-			alert("You Lost! Press Reset to Try Again.")
+		if (game.gameRunning === true && game.userHealthPoints <= 0) {
 			game.userHealthPoints = 0;
-			game.userImage
-				.css({
-					"background": "black",
-					"margin-top": "10px",
-					"width": "30%",
-					"opacity": "0.5"
-				});
-			$("#instructions").text("You Lost! Click Reset to Try Again");
+			game.enemyHealthPoints = 0;
+			$(game.userHealthPointsDisplay).text(
+				"Health Points: " + game.userHealthPoints
+			);
+			$(game.enemyHealthPointsDisplay).text(
+				"Health Points: " + game.enemyHealthPoints
+			);
+			alert("You Lost! Press Reset to Try Again.")
+			game.userImage.css({
+				"background": "black",
+				"opacity": "0.5"
+			});
+			$("#instructions").text("You Lost! Click the New Game Button to Try Again");
+			game.gameRunning = false;
 
 		};
 
 		if (game.gameRunning === true && game.enemyDefeatedCount === 3) {
 			alert("You Won! Press Reset to Go Again")
-			$("#instructions").text("You Won! Press Reset to Go Again");
+			$("#instructions").text("You Won! Click the New Game Button to Go Again");
 			game.gameRunning = false;
 		};
 	});
@@ -317,54 +346,5 @@ $("#start-game").on("click", function () {
 	$("#reset-button").on("click", () => {
 		reset();
 	});
-	
-
-
-
-	//game.userHealthPoints = game.userHealthPoints - game.counterAttackPoints;
-	//game.enemyHealthPoints = game.enemyHealthPoints - game.attackPoints;
-	//console.log(game.userHealthPoints);
-	// console.log(game.enemyHealthPoints);
-
 
 });
-
-/*$("#harry-col, #ron-col, #hermione-col, #draco-col").on("click", function() {
-    if (game.userSelected === false && game.gameRunning === true) {
-      game.userSelected = true;
-      game.userPlayer = $(this);
-      game.userPlayer
-        .appendTo("#player-row")
-          .css({"background": 'green', "margin-bottom": "10px" });
-        $("#instructions").text("Select one wizard as your first enemy");
-        console.log(game.userPlayer);
-    } else if (
-      game.userSelected === true &&
-      game.gameRunning === true &&
-      game.enemySelected === false
-    ) {
-      game.enemySelected = true;
-      game.enemy = $(this);
-      game.enemy
-        .appendTo("#enemy-row")
-          .css({"background": 'red', "margin-top": "10px" });
-      $("#instructions").text("Attack your enemy!");
-    }
-  });
-    
-    $("#attack-button").on("click", function () {
-        if (game.userSelected === false && game.gameRunning === true && game.enemySelected === true) {
-            attackPoints = Math.floor(Math.random() * (30 - 10 + 10)) + 10;
-            game.userPlayer - attackPoints
-        } else if (
-            game.userSelected === true &&
-            game.gameRunning === true &&
-            game.enemySelected === false
-        ) {
-            game.enemySelected = true;
-            game.enemy = $(this);
-            game.enemy
-                .appendTo("#enemy-row")
-                .css({ "background": 'red', "margin-top": "10px" });
-            $("#instructions").text("Attack your enemy!");
-        }*/
